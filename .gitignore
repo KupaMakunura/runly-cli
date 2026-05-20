@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+
+# Local runtime files
+.runlyai/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Build output
+dist/
+build/
+out/
+coverage/
+
+# TypeScript and tooling caches
+*.tsbuildinfo
+.turbo/
+.cache/
+.parcel-cache/
+.vite/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+bun.lockb.tmp
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo

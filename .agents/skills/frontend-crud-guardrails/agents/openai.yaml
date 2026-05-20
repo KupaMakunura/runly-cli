@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend CRUD Guardrails"
+  short_description: "Table-first CRUD UI consistency rules."
+  default_prompt: "Use $frontend-crud-guardrails to keep this CRUD page table-first, require explicit required selects, and reuse existing badge patterns."

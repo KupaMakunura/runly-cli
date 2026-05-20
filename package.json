@@ -1,0 +1,25 @@
+{
+  "name": "runly-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.17.0",
+  "dependencies": {
+    "@clack/prompts": "^1.4.0",
+    "@openai/agents": "^0.11.4",
+    "commander": "^14.0.3",
+    "openai": "^6.38.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.0",
+    "bun-types": "^1.3.14",
+    "typescript": "^6.0.3"
+  }
+}
