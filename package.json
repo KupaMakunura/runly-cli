@@ -1,7 +1,7 @@
 {
   "name": "runly-cli",
   "version": "0.1.0",
-  "description": "Workflow CLI for structured agentic software engineering with RunlyAI",
+  "description": "Local CLI for RunlyAI Learn — workflow scaffolding for agentic software engineering courses",
   "type": "module",
   "main": "src/main.ts",
   "bin": {

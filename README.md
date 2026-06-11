@@ -1,14 +1,26 @@
 # runly-cli
 
-Workflow CLI for [RunlyAI](https://runlyai.com) — structured agentic engineering on your machine with your own coding agent.
+Local CLI for **[RunlyAI Learn](https://learn.runlyai.com)** — the hands-on program that teaches agentic software engineering on your machine.
 
-Runly does **not** ship a coding model. It installs:
+RunlyAI Learn is **not** a coding agent. Students bring Cursor, Claude Code, Codex, Copilot, or Gemini. This CLI installs the **learning workflow** on their project:
 
-- **`.runly/`** — registry, workflow routers, doc templates
-- **`.specify/`** — Spec Kit infrastructure (project root)
-- **Agent skill exports** — routers + bundled community + Spec Kit skills into Cursor, Claude, Codex & Others (`.agents/skills/`), Copilot, or Gemini folders
+- **Think → Plan → Build → Review → Test**
+- Thin `runly-*` routers that point at proven skills (`/grill-me`, `/speckit-specify`, `/speckit-implement`, `/qa`, …)
+- Artifacts in `.runly/docs/` so progress is visible and reviewable
 
-Students learn: **Think → Plan → Build → Review → Test**, invoking skills like `/grill-me` and `/speckit-plan` through thin `runly-*` routers.
+The npm package is **`runly-cli`**; the command students run is **`runly`**.
+
+---
+
+## What it installs
+
+| Piece | Location | Purpose |
+|--------|-----------|---------|
+| Learn workflow | `.runly/` | Registry, routers, `STATE.md`, doc templates |
+| Spec Kit | `.specify/` | Spec-driven development infrastructure |
+| Skills export | `.agents/skills/`, `.cursor/skills/`, etc. | Routers + bundled community + Spec Kit skills |
+
+Skills are **regenerated** on the student machine — not committed to git.
 
 ---
 
@@ -16,40 +28,35 @@ Students learn: **Think → Plan → Build → Review → Test**, invoking skill
 
 ```bash
 npm install -g runly-cli
-# or
+# or, in a project:
 npx runly-cli init
 ```
 
-Requires [Bun](https://bun.sh) or Node 20+ to run the CLI.
+Requires [Bun](https://bun.sh) to run the CLI (`#!/usr/bin/env bun`).
 
 ---
 
-## Quick start
+## Quick start (students)
 
 ```bash
-cd your-project
+cd your-course-project
 runly init
 ```
 
 `init` will:
 
-1. Copy `.runly/` from the package template
-2. Install `.specify/` (Spec Kit)
-3. Export skills to the agent folders you select
-4. Create `AGENTS.md` if missing
+1. Scaffold **`.runly/`** (RunlyAI Learn templates)
+2. Install **`.specify/`** (Spec Kit)
+3. Export skills to the agent folders you select (default: **Codex & Others** → `.agents/skills/`)
+4. Create **`AGENTS.md`** if missing
 
-Re-export after changing agents in `.runly/registry.json`:
-
-```bash
-runly export
-```
-
-Health check and repair:
+Then work in your coding agent using the Learn workflow — e.g. invoke **`runly-think`**, then **`runly-plan`**, and so on.
 
 ```bash
-runly doctor
-runly doctor --fix
-runly doctor --fix --offline   # use bundled templates only
+runly export              # re-export after changing agents in registry
+runly doctor              # health check
+runly doctor --fix        # sync templates + re-export
+runly doctor --fix --offline
 ```
 
 ---
@@ -58,23 +65,23 @@ runly doctor --fix --offline   # use bundled templates only
 
 | Command | Description |
 |---------|-------------|
-| `runly init` | Scaffold `.runly/`, install `.specify/`, export skills |
+| `runly init` | Set up RunlyAI Learn on a project |
 | `runly export` | Re-export skills to configured agent folders |
 | `runly doctor` | Check registry, skill files, and agent exports |
-| `runly doctor --fix` | Sync Runly core + Spec Kit bundle + re-export |
+| `runly doctor --fix` | Refresh bundled templates and re-export |
 
 ---
 
-## What gets committed
+## What students commit
 
-Commit:
+```txt
+.runly/
+.specify/
+.runly/docs/     # PROJECT_BRIEF, SPEC, PLAN, REVIEW_NOTES, TEST_PLAN, STATE.md
+AGENTS.md
+```
 
-- `.runly/`
-- `.specify/`
-- `.runly/docs/*` (artifacts)
-- `AGENTS.md`
-
-Do **not** commit agent export dirs (add to `.gitignore`):
+Add to **`.gitignore`** (regenerate with `runly export`):
 
 ```gitignore
 .cursor/
@@ -84,22 +91,20 @@ Do **not** commit agent export dirs (add to `.gitignore`):
 .gemini/
 ```
 
-Regenerate with `runly export` or `runly doctor --fix`.
-
 ---
 
-## Package layout
+## For instructors & contributors
 
-Bundled in the npm package (`templates/`):
+Bundled under `templates/` in this repo:
 
 ```txt
 templates/
-  runly/           # registry, runly-* routers, docs
+  runly/           # registry, runly-* routers, Learn doc templates
   spec-kit/        # .specify/ + speckit-* skills
-  community/       # matt-pocock, gstack skills
+  community/       # matt-pocock, gstack skills (classroom-pinned)
 ```
 
-At init, only `.runly/` and `.specify/` land in the student project. Skills are copied into the user’s agent config directories.
+Course content, lessons, and certification live on **RunlyAI Learn** (cloud). This CLI is the open-source **local workflow layer** students use while building real projects.
 
 ---
 

@@ -1,12 +1,14 @@
 # AGENTS.md
 
-You are working in a **Runly** project.
+You are supporting a student in **RunlyAI Learn** — a hands-on program for learning agentic software engineering.
 
-Runly is a workflow layer for learning agentic software engineering. It does **not** replace your coding agent (Cursor, Claude Code, Codex, Copilot, Gemini). It routes you through structured phases and community skills.
+The student uses **their own coding agent** (Cursor, Claude Code, Codex & Others, Copilot, Gemini). RunlyAI Learn does **not** replace that agent. It gives the project structure, workflow routers, and skill routing so the student practices a repeatable loop:
 
 ```txt
 Think → Plan → Build → Review → Test
 ```
+
+The local **`runly` CLI** (`runly-cli` on npm) scaffolds `.runly/`, `.specify/`, and agent skill exports on the student’s machine.
 
 ---
 
@@ -14,8 +16,9 @@ Think → Plan → Build → Review → Test
 
 | Layer | Location | Committed to git? |
 |--------|-----------|-------------------|
-| Runly registry, routers, doc templates, **workflow state** | `.runly/` | Yes |
+| RunlyAI Learn registry, routers, doc templates, **workflow state** | `.runly/` | Yes |
 | Spec Kit infrastructure | `.specify/` (project root) | Yes |
+| Learning artifacts (brief, spec, plan, review, tests) | `.runly/docs/` | Yes |
 | Exported skills (routers + community + speckit) | Agent folder (see below) | No — regenerated |
 
 **Agent skill folders** (created by `runly init` / `runly export` / `runly doctor --fix`):
@@ -28,25 +31,27 @@ Think → Plan → Build → Review → Test
 | GitHub Copilot | `.github/skills/` |
 | Gemini CLI | `.gemini/skills/` |
 
-Community and Spec Kit skills ship inside the `runly` npm package and are copied into those folders. They are **not** stored under `.runly/`.
+Community and Spec Kit skills ship inside the **runly-cli** npm package and are copied into those folders. They are **not** stored under `.runly/`.
 
 ---
 
 ## How to behave
 
-Before doing Runly-guided work:
+You are a **teaching assistant** for the Learn workflow, not a shortcut around it.
+
+Before RunlyAI Learn–guided work:
 
 1. Read **`.runly/docs/STATE.md`** — current workflow, active skill, planning scope.
 2. Read `.runly/registry.json`.
-3. Load the matching **Runly router skill** from your agent skills folder (e.g. `runly-plan`).
-4. Follow the router — it picks skills **by planning scope** (plan) or registry order (other phases). Invoke community and Spec Kit skills **by name** (e.g. `/speckit-specify`, `/speckit-plan`).
-5. Produce or update artifacts under `.runly/docs/` and update **STATE.md** when the workflow advances.
+3. Load the matching **Runly router skill** from the student’s agent folder (e.g. `runly-plan`).
+4. Follow the router — it picks skills **by planning scope** (plan) or registry order (other phases). Invoke community and Spec Kit skills **by name** (e.g. `/grill-me`, `/speckit-specify`, `/speckit-implement`).
+5. Help the student produce artifacts under `.runly/docs/` and update **STATE.md** when they advance.
 
-Runly router skills are thin. They do not embed full engineering methods — they point at community and Spec Kit skills.
+Runly router skills are thin. They route; community and Spec Kit skills teach the method.
 
 **Spec Kit skills** (`speckit-*`) use `.specify/` at the project root when invoked.
 
-If `.runly/` is missing, tell the user to run:
+If `.runly/` is missing, tell the student to run:
 
 ```bash
 npx runly-cli init
@@ -60,9 +65,11 @@ runly export
 runly doctor --fix
 ```
 
+Do not skip phases to “just write code” unless the instructor or STATE.md says otherwise.
+
 ---
 
-## Workflow chain (teaching default)
+## Workflow chain (Learn default)
 
 ```txt
 STATE.md     → always read first; tracks workflow + planning scope
@@ -93,4 +100,4 @@ runly doctor        # health check
 runly doctor --fix  # sync templates + re-export
 ```
 
-Do not guess the workflow — follow what the student and `registry.json` indicate.
+Follow the student’s current phase in **STATE.md** and `registry.json` — do not guess.
