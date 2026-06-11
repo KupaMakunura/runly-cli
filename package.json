@@ -1,20 +1,35 @@
 {
   "name": "runly-cli",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "version": "0.1.0",
+  "description": "Workflow CLI for structured agentic software engineering with RunlyAI",
+  "type": "module",
+  "main": "src/main.ts",
+  "bin": {
+    "runly": "src/main.ts"
   },
-  "keywords": [],
+  "files": [
+    "src",
+    "templates",
+    "AGENTS.md"
+  ],
+  "scripts": {
+    "dev": "bun run src/main.ts",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "runly",
+    "ai",
+    "cli",
+    "workflow",
+    "agents"
+  ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "packageManager": "pnpm@10.17.0",
   "dependencies": {
     "@clack/prompts": "^1.4.0",
-    "@openai/agents": "^0.11.4",
     "commander": "^14.0.3",
-    "openai": "^6.38.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

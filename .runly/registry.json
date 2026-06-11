@@ -1,0 +1,167 @@
+{
+  "version": "0.4.2",
+  "export": {
+    "agents": ["agents"]
+  },
+  "sync": {
+    "runlyRepo": "KupaMakunura/runly-cli",
+    "ref": "main",
+    "templatesPath": "templates/runly"
+  },
+  "specKitBundle": {
+    "version": "0.10.2"
+  },
+  "sources": {
+    "runly": {
+      "type": "local",
+      "path": ".runly/skills/runly"
+    },
+    "matt-pocock-skills": {
+      "type": "bundled",
+      "path": "templates/community/matt-pocock"
+    },
+    "gstack": {
+      "type": "bundled",
+      "path": "templates/community/gstack"
+    },
+    "spec-kit": {
+      "type": "bundled",
+      "path": "templates/spec-kit"
+    }
+  },
+  "skills": {
+    "grill-me": {
+      "source": "matt-pocock-skills",
+      "path": "bundled",
+      "purpose": "Interview the user until the plan is clear.",
+      "ownedByRunly": false
+    },
+    "grill-with-docs": {
+      "source": "matt-pocock-skills",
+      "path": "bundled",
+      "purpose": "Clarify the plan while updating project context documents.",
+      "ownedByRunly": false
+    },
+    "zoom-out": {
+      "source": "matt-pocock-skills",
+      "path": "bundled",
+      "purpose": "Explain the broader codebase or system context.",
+      "ownedByRunly": false
+    },
+    "tdd": {
+      "source": "matt-pocock-skills",
+      "path": "bundled",
+      "purpose": "Use a red-green-refactor loop.",
+      "ownedByRunly": false
+    },
+    "diagnose": {
+      "source": "matt-pocock-skills",
+      "path": "bundled",
+      "purpose": "Debug using reproduce, minimize, hypothesize, instrument, fix, and regression-test.",
+      "ownedByRunly": false
+    },
+    "office-hours": {
+      "source": "gstack",
+      "path": "bundled",
+      "purpose": "Challenge the product framing before implementation.",
+      "ownedByRunly": false
+    },
+    "plan-eng-review": {
+      "source": "gstack",
+      "path": "bundled",
+      "purpose": "Review architecture, data flow, edge cases, and tests.",
+      "ownedByRunly": false
+    },
+    "review": {
+      "source": "gstack",
+      "path": "bundled",
+      "purpose": "Find production-level bugs and completeness gaps.",
+      "ownedByRunly": false
+    },
+    "qa": {
+      "source": "gstack",
+      "path": "bundled",
+      "purpose": "Test the app, find bugs, fix them, and reverify.",
+      "ownedByRunly": false
+    },
+    "runly-think": {
+      "source": "runly",
+      "path": ".runly/skills/runly/runly-think.md",
+      "purpose": "Router for think workflow — routes to grill-me.",
+      "ownedByRunly": true
+    },
+    "runly-plan": {
+      "source": "runly",
+      "path": ".runly/skills/runly/runly-plan.md",
+      "purpose": "Router for plan workflow — scope-aware routing to office-hours, grill-with-docs, speckit-specify, speckit-clarify, speckit-plan.",
+      "ownedByRunly": true
+    },
+    "runly-build": {
+      "source": "runly",
+      "path": ".runly/skills/runly/runly-build.md",
+      "purpose": "Router for build workflow — routes to speckit-plan, speckit-tasks, and tdd.",
+      "ownedByRunly": true
+    },
+    "runly-review": {
+      "source": "runly",
+      "path": ".runly/skills/runly/runly-review.md",
+      "purpose": "Router for review workflow — routes to plan-eng-review for code.",
+      "ownedByRunly": true
+    },
+    "runly-test": {
+      "source": "runly",
+      "path": ".runly/skills/runly/runly-test.md",
+      "purpose": "Router for test workflow — routes to qa.",
+      "ownedByRunly": true
+    },
+    "runly-debug": {
+      "source": "runly",
+      "path": ".runly/skills/runly/runly-debug.md",
+      "purpose": "Router for debug — routes to diagnose when something breaks.",
+      "ownedByRunly": true
+    }
+  },
+  "workflows": {
+    "think": {
+      "goal": "Clarify the project before planning or writing code.",
+      "preferredSkills": ["grill-me"],
+      "fallbackSkills": [],
+      "requiredArtifact": ".runly/docs/PROJECT_BRIEF.md",
+      "nextWorkflow": "plan"
+    },
+    "plan": {
+      "goal": "Turn intent into a spec and technical plan. Route by planning scope (mvp, feature, epic, spike, refactor) — see runly-plan router.",
+      "preferredSkills": [
+        "office-hours",
+        "grill-with-docs",
+        "zoom-out",
+        "speckit-specify",
+        "speckit-clarify",
+        "speckit-plan"
+      ],
+      "fallbackSkills": [],
+      "requiredArtifact": ".runly/docs/PLAN.md",
+      "nextWorkflow": "build"
+    },
+    "build": {
+      "goal": "Build a working vertical slice from the plan.",
+      "preferredSkills": ["speckit-plan", "speckit-tasks", "tdd"],
+      "fallbackSkills": [],
+      "requiredArtifact": "working-code",
+      "nextWorkflow": "review"
+    },
+    "review": {
+      "goal": "Review code quality, correctness, and maintainability.",
+      "preferredSkills": ["plan-eng-review", "zoom-out"],
+      "fallbackSkills": ["review"],
+      "requiredArtifact": ".runly/docs/REVIEW_NOTES.md",
+      "nextWorkflow": "test"
+    },
+    "test": {
+      "goal": "Verify the project works.",
+      "preferredSkills": ["qa"],
+      "fallbackSkills": [],
+      "requiredArtifact": ".runly/docs/TEST_PLAN.md"
+    }
+  }
+}
