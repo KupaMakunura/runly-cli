@@ -1,7 +1,13 @@
 {
-  "version": "0.4.2",
+  "version": "0.4.3",
   "export": {
-    "agents": ["agents"]
+    "agents": [
+      "cursor",
+      "claude",
+      "agents",
+      "gemini",
+      "copilot"
+    ]
   },
   "sync": {
     "runlyRepo": "KupaMakunura/runly-cli",
@@ -99,7 +105,7 @@
     "runly-build": {
       "source": "runly",
       "path": ".runly/skills/runly/runly-build.md",
-      "purpose": "Router for build workflow — routes to speckit-plan, speckit-tasks, and tdd.",
+      "purpose": "Router for build workflow — routes to speckit-tasks, speckit-implement, and tdd.",
       "ownedByRunly": true
     },
     "runly-review": {
@@ -124,7 +130,9 @@
   "workflows": {
     "think": {
       "goal": "Clarify the project before planning or writing code.",
-      "preferredSkills": ["grill-me"],
+      "preferredSkills": [
+        "grill-me"
+      ],
       "fallbackSkills": [],
       "requiredArtifact": ".runly/docs/PROJECT_BRIEF.md",
       "nextWorkflow": "plan"
@@ -145,21 +153,32 @@
     },
     "build": {
       "goal": "Build a working vertical slice from the plan.",
-      "preferredSkills": ["speckit-plan", "speckit-tasks", "tdd"],
+      "preferredSkills": [
+        "speckit-tasks",
+        "speckit-implement",
+        "tdd"
+      ],
       "fallbackSkills": [],
       "requiredArtifact": "working-code",
       "nextWorkflow": "review"
     },
     "review": {
       "goal": "Review code quality, correctness, and maintainability.",
-      "preferredSkills": ["plan-eng-review", "zoom-out"],
-      "fallbackSkills": ["review"],
+      "preferredSkills": [
+        "plan-eng-review",
+        "zoom-out"
+      ],
+      "fallbackSkills": [
+        "review"
+      ],
       "requiredArtifact": ".runly/docs/REVIEW_NOTES.md",
       "nextWorkflow": "test"
     },
     "test": {
       "goal": "Verify the project works.",
-      "preferredSkills": ["qa"],
+      "preferredSkills": [
+        "qa"
+      ],
       "fallbackSkills": [],
       "requiredArtifact": ".runly/docs/TEST_PLAN.md"
     }

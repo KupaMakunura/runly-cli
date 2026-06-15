@@ -1,8 +1,10 @@
 import type { RunlyAgent } from "../constants/agents.ts";
 import { exportAgents as registryAgents, loadProject } from "../lib/project.ts";
 import { exportSkills } from "./export.ts";
-import { applyRunlyCoreToProject, syncRunlyCoreTemplates } from "./sync-runly-core.ts";
+import { join } from "node:path";
+import { copyDirectory, writeJson } from "../lib/fs.ts";
 import { installSpecify } from "./install-specify.ts";
+import { loadScaffoldAssets } from "./scaffold-assets.ts";
 
 export type SyncResult = {
   coreSource: "github" | "bundled";
@@ -18,28 +20,33 @@ export async function syncProject(
   options: { offline?: boolean } = {},
 ): Promise<SyncResult> {
   const project = await loadProject(startDir);
-  const syncConfig = project.registry.sync;
-
-  const core = await syncRunlyCoreTemplates(syncConfig, options);
+  const assets = await loadScaffoldAssets(project.registry.sync, options);
   try {
-    await applyRunlyCoreToProject(
-      project.root,
-      core.templateDir,
-      core.registry,
-      project.registry.export,
+    const runlyPath = join(project.root, ".runly");
+    await copyDirectory(
+      join(assets.runlyTemplateDir, "skills/runly"),
+      join(runlyPath, "skills/runly"),
+      { overwrite: true },
     );
+    await writeJson(join(runlyPath, "registry.json"), {
+      ...assets.registry,
+      export: project.registry.export ?? assets.registry.export,
+    });
   } finally {
-    await core.cleanup?.();
+    await assets.cleanup?.();
   }
 
-  await installSpecify(project.root, { force: true, requireGit: false });
+  await installSpecify(project.root, {
+    force: true,
+    sourceDir: assets.specifySourceDir,
+  });
 
   const refreshed = await loadProject(startDir);
   const agents = registryAgents(refreshed) as RunlyAgent[];
   const exportResult = await exportSkills(project.root, agents);
 
   return {
-    coreSource: core.source,
+    coreSource: assets.source,
     registryVersion: refreshed.registry.version,
     exported: exportResult.written.length,
     communityExported: exportResult.communityWritten.length,

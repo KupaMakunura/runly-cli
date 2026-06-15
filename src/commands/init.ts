@@ -6,7 +6,7 @@ export function registerInitCommand(program: Command): void {
   program
     .command("init")
     .description(
-      "Initialize .runly/, bundled Spec Kit, community skills, and agent exports",
+      "Initialize .runly/, .specify/, and agent skill exports",
     )
     .option(
       "--agent <agent>",
@@ -15,7 +15,7 @@ export function registerInitCommand(program: Command): void {
       [],
     )
     .option("--force", "Refresh templates when .runly already exists", false)
-    .option("--skip-spec-kit", "Skip bundled Spec Kit install", false)
+    .option("--offline", "Use bundled templates only", false)
     .action(async (options) => {
       const agents =
         options.agent.length > 0
@@ -31,7 +31,7 @@ export function registerInitCommand(program: Command): void {
       await initProject({
         agents,
         force: options.force,
-        skipSpecKitBundle: options.skipSpecKit,
+        offline: options.offline,
       });
     });
 }

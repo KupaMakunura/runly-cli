@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import { mkdir, mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
@@ -9,7 +9,7 @@ import {
 } from "../src/lib/detect-agents.ts";
 import { resolveAgent } from "../src/constants/agents.ts";
 import { initProject } from "../src/services/init.ts";
-import { pathExists } from "../src/lib/fs.ts";
+import { pathExists, readText } from "../src/lib/fs.ts";
 
 describe("detectInstalledAgents", () => {
   test("returns empty when no agent folders exist", async () => {
@@ -60,14 +60,14 @@ describe("initProject default agent", () => {
   test("exports to .agents/skills when no agents flag and empty project", async () => {
     const root = await mkdtemp(join(tmpdir(), "runly-init-default-"));
     try {
-      await initProject({ cwd: root, skipSpecKitBundle: true });
+      await initProject({ cwd: root, offline: true });
 
       expect(
         await pathExists(join(root, ".agents/skills/runly-think/SKILL.md")),
       ).toBe(true);
 
       const registry = JSON.parse(
-        await Bun.file(join(root, ".runly/registry.json")).text(),
+        await readText(join(root, ".runly/registry.json")),
       );
       expect(registry.export.agents).toEqual(["agents"]);
     } finally {
@@ -81,11 +81,11 @@ describe("initProject default agent", () => {
       await initProject({
         cwd: root,
         agents: ["codex"],
-        skipSpecKitBundle: true,
+        offline: true,
       });
 
       const registry = JSON.parse(
-        await Bun.file(join(root, ".runly/registry.json")).text(),
+        await readText(join(root, ".runly/registry.json")),
       );
       expect(registry.export.agents).toEqual(["agents"]);
     } finally {

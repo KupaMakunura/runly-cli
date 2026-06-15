@@ -54,7 +54,7 @@ Runly router skills are thin. They route; community and Spec Kit skills teach th
 If `.runly/` is missing, tell the student to run:
 
 ```bash
-npx runly-cli init
+npx runly-cli
 ```
 
 If agent skills are missing or stale:
@@ -95,6 +95,7 @@ Full catalog: `registry.json` → `workflows.*.preferredSkills`. **runly-plan** 
 
 ```bash
 runly init          # scaffold .runly/, install .specify/, export skills
+npx runly-cli       # same scaffold flow in the current directory
 runly export        # re-copy skills to configured agent folders
 runly doctor        # health check
 runly doctor --fix  # sync templates + re-export

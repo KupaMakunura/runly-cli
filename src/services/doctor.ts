@@ -1,4 +1,5 @@
 import { join } from "node:path";
+import { spawnSync } from "node:child_process";
 import { getRunlyTemplateDir, projectSpecifyDir } from "../lib/paths.ts";
 import { pathExists, readJson } from "../lib/fs.ts";
 import {
@@ -16,7 +17,6 @@ import {
   workflowSkillId,
 } from "../constants/workflows.ts";
 import { syncProject } from "./sync.ts";
-import { checkGit } from "../lib/prerequisites.ts";
 import type { RunlyAgent } from "../constants/agents.ts";
 
 export type DoctorResult = {
@@ -33,10 +33,10 @@ async function collectHealth(project: RunlyProject): Promise<{
   const issues: string[] = [];
   const warnings: string[] = [];
 
-  const git = await checkGit();
-  if (!git.available) {
+  const git = spawnSync("git", ["--version"], { encoding: "utf8" });
+  if (git.status !== 0) {
     warnings.push(
-      `git is not installed. Spec Kit feature branches need git. ${git.installHint ?? ""}`.trim(),
+      "Git is not installed. Spec Kit feature branches need git. https://git-scm.com/downloads",
     );
   }
 
@@ -52,7 +52,7 @@ async function collectHealth(project: RunlyProject): Promise<{
     const missingSpecKit = await missingSpecKitSkills(project.root, agents);
     for (const skillId of missingSpecKit) {
       warnings.push(
-        `speckit skill missing from agent folder: ${skillId}. Run \`runly doctor --fix\`.`,
+        `Spec Kit skill missing from agent folder: ${skillId}. Run \`runly doctor --fix\`.`,
       );
     }
   }
@@ -106,7 +106,7 @@ export async function runDoctor(
       `Synced Runly core from ${sync.coreSource} (registry ${sync.registryVersion}).`,
     );
     fixed.push(
-      `Re-exported ${sync.exported} runly + ${sync.communityExported} community + ${sync.specKitExported} speckit skill file(s).`,
+      `Re-exported ${sync.exported} runly + ${sync.communityExported} community + ${sync.specKitExported} spec kit skill file(s).`,
     );
 
     if (sync.removed.length > 0) {

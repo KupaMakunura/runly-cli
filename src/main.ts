@@ -1,4 +1,4 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 
 import { Command } from "commander";
 import { RunlyError } from "./lib/errors.ts";
@@ -6,19 +6,43 @@ import { registerInitCommand } from "./commands/init.ts";
 import { registerExportCommand } from "./commands/export.ts";
 import { registerDoctorCommand } from "./commands/doctor.ts";
 
+function normalizeCliArgv(argv: string[]): string[] {
+  const args = argv.slice(2);
+  const first = args[0];
+
+  if (!first) {
+    return [argv[0], argv[1], "init"];
+  }
+
+  if (
+    first === "init" ||
+    first === "export" ||
+    first === "doctor" ||
+    first === "-h" ||
+    first === "--help" ||
+    first === "-V" ||
+    first === "--version"
+  ) {
+    return argv;
+  }
+
+  if (first.startsWith("-")) {
+    return [argv[0], argv[1], "init", ...args];
+  }
+
+  return argv;
+}
+
 const program = new Command();
 
-program
-  .name("runly")
-  .description("Runly workflow CLI — init projects, export mode skills, and check configuration health")
-  .version("0.1.0");
+program.name("runly").description("Runly Workflow CLI").version("0.1.0");
 
 registerInitCommand(program);
 registerExportCommand(program);
 registerDoctorCommand(program);
 
 try {
-  await program.parseAsync(process.argv);
+  await program.parseAsync(normalizeCliArgv(process.argv));
 } catch (error) {
   if (error instanceof RunlyError) {
     console.error(error.message);

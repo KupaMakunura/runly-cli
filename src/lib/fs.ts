@@ -1,4 +1,4 @@
-import { mkdir, readdir, stat } from "node:fs/promises";
+import { copyFile, mkdir, readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
 export async function pathExists(path: string): Promise<boolean> {
@@ -11,12 +11,12 @@ export async function pathExists(path: string): Promise<boolean> {
 }
 
 export async function readText(path: string): Promise<string> {
-  return Bun.file(path).text();
+  return readFile(path, "utf8");
 }
 
 export async function writeText(path: string, content: string): Promise<void> {
   await mkdir(dirname(path), { recursive: true });
-  await Bun.write(path, content);
+  await writeFile(path, content, "utf8");
 }
 
 export async function readJson<T>(path: string): Promise<T> {
@@ -54,7 +54,7 @@ export async function copyDirectory(
     }
 
     await mkdir(dirname(to), { recursive: true });
-    await Bun.write(to, Bun.file(from));
+    await copyFile(from, to);
     written.push(to);
   }
 

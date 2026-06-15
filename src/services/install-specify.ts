@@ -1,7 +1,6 @@
 import { join } from "node:path";
 import { getSpecKitBundleDir, projectSpecifyDir } from "../lib/paths.ts";
 import { copyDirectory, pathExists } from "../lib/fs.ts";
-import { ensureGit } from "../lib/prerequisites.ts";
 
 export type InstallSpecifyResult = {
   installed: boolean;
@@ -10,13 +9,9 @@ export type InstallSpecifyResult = {
 /** Copy bundled `.specify/` infrastructure to the project root only. */
 export async function installSpecify(
   projectRoot: string,
-  options: { force?: boolean; requireGit?: boolean } = {},
+  options: { force?: boolean; sourceDir?: string } = {},
 ): Promise<InstallSpecifyResult> {
-  if (options.requireGit !== false) {
-    await ensureGit();
-  }
-
-  const specifySource = join(getSpecKitBundleDir(), ".specify");
+  const specifySource = options.sourceDir ?? join(getSpecKitBundleDir(), ".specify");
   if (!(await pathExists(specifySource))) {
     return { installed: false };
   }

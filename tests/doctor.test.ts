@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import { mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
@@ -9,7 +9,11 @@ describe("runDoctor", () => {
   test("reports healthy project after init", async () => {
     const root = await mkdtemp(join(tmpdir(), "runly-doctor-"));
     try {
-      await initProject({ cwd: root, agents: ["cursor"], skipSpecKitBundle: true });
+      await initProject({
+        cwd: root,
+        agents: ["cursor"],
+        offline: true,
+      });
 
       const result = await runDoctor(root);
       expect(result.healthy).toBe(true);
@@ -22,7 +26,11 @@ describe("runDoctor", () => {
   test("fix offline restores missing exports", async () => {
     const root = await mkdtemp(join(tmpdir(), "runly-doctor-fix-"));
     try {
-      await initProject({ cwd: root, agents: ["cursor"], skipSpecKitBundle: true });
+      await initProject({
+        cwd: root,
+        agents: ["cursor"],
+        offline: true,
+      });
       await rm(join(root, ".cursor/skills/runly-think/SKILL.md"));
 
       const before = await runDoctor(root);
@@ -41,7 +49,11 @@ describe("runDoctor", () => {
   test("reports missing exports when agent copy was removed", async () => {
     const root = await mkdtemp(join(tmpdir(), "runly-doctor-"));
     try {
-      await initProject({ cwd: root, agents: ["cursor"], skipSpecKitBundle: true });
+      await initProject({
+        cwd: root,
+        agents: ["cursor"],
+        offline: true,
+      });
       await rm(join(root, ".cursor/skills/runly-think/SKILL.md"));
 
       const result = await runDoctor(root);

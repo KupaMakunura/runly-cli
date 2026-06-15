@@ -1,9 +1,9 @@
-import { describe, expect, test } from "bun:test";
-import { mkdtemp, rm } from "node:fs/promises";
+import { describe, expect, test } from "vitest";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { initProject } from "../src/services/init.ts";
-import { pathExists } from "../src/lib/fs.ts";
+import { pathExists, readText } from "../src/lib/fs.ts";
 
 describe("initProject", () => {
   test("creates .runly with registry and workflow skills only", async () => {
@@ -12,7 +12,7 @@ describe("initProject", () => {
       await initProject({
         cwd: root,
         agents: ["cursor", "claude"],
-        skipSpecKitBundle: true,
+        offline: true,
       });
 
       expect(await pathExists(join(root, ".runly/registry.json"))).toBe(true);
@@ -34,7 +34,7 @@ describe("initProject", () => {
       ).toBe(false);
 
       const registry = JSON.parse(
-        await Bun.file(join(root, ".runly/registry.json")).text(),
+        await readText(join(root, ".runly/registry.json")),
       );
       expect(registry.export.agents).toEqual(["cursor", "claude"]);
       expect(registry.workflows.think.preferredSkills).toContain("grill-me");
@@ -46,13 +46,39 @@ describe("initProject", () => {
   test("refuses to overwrite without force", async () => {
     const root = await mkdtemp(join(tmpdir(), "runly-init-"));
     try {
-      await initProject({ cwd: root, agents: ["cursor"], skipSpecKitBundle: true });
+      await initProject({
+        cwd: root,
+        agents: ["cursor"],
+        offline: true,
+      });
 
       await expect(
-        initProject({ cwd: root, agents: ["cursor"], skipSpecKitBundle: true }),
+        initProject({
+          cwd: root,
+          agents: ["cursor"],
+          offline: true,
+        }),
       ).rejects.toThrow(
         ".runly already exists",
       );
+    } finally {
+      await rm(root, { recursive: true, force: true });
+    }
+  });
+
+  test("preserves an existing AGENTS.md file", async () => {
+    const root = await mkdtemp(join(tmpdir(), "runly-init-"));
+    try {
+      const agentsPath = join(root, "AGENTS.md");
+      await writeFile(agentsPath, "# Existing agent instructions\n", "utf8");
+
+      await initProject({
+        cwd: root,
+        agents: ["cursor"],
+        offline: true,
+      });
+
+      expect(await readText(agentsPath)).toBe("# Existing agent instructions\n");
     } finally {
       await rm(root, { recursive: true, force: true });
     }
