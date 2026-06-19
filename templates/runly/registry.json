@@ -119,6 +119,18 @@
       "path": ".runly/skills/runly/runly-debug.md",
       "purpose": "Router for debug — routes to diagnose when something breaks.",
       "ownedByRunly": true
+    },
+    "runly-spec": {
+      "source": "runly",
+      "path": ".runly/skills/runly/runly-spec.md",
+      "purpose": "Router for spec workflow — routes to grill-with-docs and speckit-specify.",
+      "ownedByRunly": true
+    },
+    "runly-submit-project": {
+      "source": "runly",
+      "path": ".runly/skills/runly/runly-submit-project.md",
+      "purpose": "Router for submit workflow — reflection and submission package.",
+      "ownedByRunly": true
     }
   },
   "workflows": {
@@ -161,7 +173,21 @@
       "goal": "Verify the project works.",
       "preferredSkills": ["qa"],
       "fallbackSkills": [],
-      "requiredArtifact": ".runly/docs/TEST_PLAN.md"
+      "requiredArtifact": ".runly/docs/TEST_PLAN.md",
+      "nextWorkflow": "ship"
+    },
+    "spec": {
+      "goal": "Define tools, inputs, outputs, and auth rules before planning.",
+      "preferredSkills": ["grill-with-docs", "speckit-specify"],
+      "fallbackSkills": [],
+      "requiredArtifact": ".runly/docs/SPEC.md",
+      "nextWorkflow": "plan"
+    },
+    "submit": {
+      "goal": "Write the final reflection and prepare the submission package.",
+      "preferredSkills": ["zoom-out"],
+      "fallbackSkills": [],
+      "requiredArtifact": ".runly/docs/REFLECTION.md"
     }
   }
 }
