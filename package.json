@@ -1,11 +1,12 @@
 {
-  "name": "runly-cli",
+  "name": "@runlyai/cli",
   "version": "0.3.0",
   "description": "Local CLI for RunlyAI Learn — workflow scaffolding for agentic software engineering.",
   "type": "module",
   "main": "dist/main.js",
   "bin": {
-    "runly": "dist/main.js"
+    "runly": "dist/main.js",
+    "runly-cli": "dist/main.js"
   },
   "files": [
     "dist",

@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 
+import { createRequire } from "node:module";
 import { Command } from "commander";
 import { RunlyError } from "./lib/errors.ts";
 import { registerInitCommand } from "./commands/init.ts";
 import { registerExportCommand } from "./commands/export.ts";
 import { registerDoctorCommand } from "./commands/doctor.ts";
+
+const { version } = createRequire(import.meta.url)("../package.json");
 
 function normalizeCliArgv(argv: string[]): string[] {
   const args = argv.slice(2);
@@ -35,7 +38,7 @@ function normalizeCliArgv(argv: string[]): string[] {
 
 const program = new Command();
 
-program.name("runly").description("Runly Workflow CLI").version("0.1.0");
+program.name("runly").description("Runly Workflow CLI").version(version);
 
 registerInitCommand(program);
 registerExportCommand(program);

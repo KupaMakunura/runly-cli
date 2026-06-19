@@ -1,4 +1,4 @@
-# runly-cli
+# @runlyai/cli
 
 Local CLI for **[RunlyAI Learn](https://learn.runlyai.com)** — the hands-on program that teaches agentic software engineering on your machine.
 
@@ -8,82 +8,152 @@ RunlyAI Learn is **not** a coding agent. Students bring Cursor, Claude Code, Cod
 - Thin `runly-*` routers that point at proven skills (`/grill-me`, `/speckit-specify`, `/speckit-implement`, `/qa`, …)
 - Artifacts in `.runly/docs/` so progress is visible and reviewable
 
-The npm package is **`runly-cli`**; the command students run is **`runly`**.
+---
+
+## Requirements
+
+- Node.js 20 or newer
 
 ---
 
-## What it installs
+## Installation
 
-| Piece | Location | Purpose |
-|--------|-----------|---------|
-| Learn workflow | `.runly/` | Registry, routers, `STATE.md`, doc templates |
-| Spec Kit | `.specify/` | Spec-driven development infrastructure |
-| Skills export | `.agents/skills/`, `.cursor/skills/`, etc. | Routers + bundled community + Spec Kit skills |
-
-Skills are **regenerated** on the student machine — not committed to git.
-
----
-
-## Install
+No global install needed. Run directly with `npx`:
 
 ```bash
-npm install -g runly-cli
-# or, in a project:
-npx runly-cli
+npx @runlyai/cli
 ```
 
-Requires Node.js 20 or newer.
+This downloads the CLI and immediately starts the setup wizard in your current project directory.
 
 ---
 
-## Quick start (students)
+## Quick Start
 
 ```bash
-cd your-course-project
-npx runly-cli
+cd your-project
+npx @runlyai/cli
 ```
 
-`init` will:
+The setup wizard will:
 
-1. Scaffold **`.runly/`** from the latest GitHub templates when available
-2. Install **`.specify/`** from the same source, with bundled fallback if GitHub is unavailable
-3. Export skills to the agent folders you select (default: **Codex & Others** → `.agents/skills/`)
+1. Scaffold **`.runly/`** — registry, routers, `STATE.md`, and doc templates
+2. Install **`.specify/`** — spec-driven development infrastructure
+3. Export skills to the agent folders you select (Cursor, Claude, Codex, Copilot, Gemini)
 4. Create **`AGENTS.md`** if missing
 
-Then work in your coding agent using the Learn workflow — e.g. invoke **`runly-think`**, then **`runly-plan`**, and so on.
-
-```bash
-runly init                # same scaffold flow after global install
-runly export              # re-export after changing agents in registry
-runly doctor              # health check
-runly doctor --fix        # sync templates from GitHub + re-export
-runly doctor --fix --offline
-```
+Then use your coding agent with the RunlyAI Learn workflow — invoke **`runly-think`**, **`runly-plan`**, and so on from within your agent.
 
 ---
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `npx runly-cli` | Scaffold RunlyAI Learn into the current directory |
-| `runly init` | Set up RunlyAI Learn on a project |
-| `runly export` | Re-export skills to configured agent folders |
-| `runly doctor` | Check registry, skill files, and agent exports |
-| `runly doctor --fix` | Refresh templates and re-export |
+All commands are run via `npx @runlyai/cli <command>`.
+
+### `init` — Set up RunlyAI Learn on a project
+
+```bash
+npx @runlyai/cli init
+```
+
+| Option | Description |
+|--------|-------------|
+| `--agent <name>` | Export to a specific agent. Repeatable. Values: `cursor`, `claude`, `agents` (Codex & Others), `copilot`, `gemini` |
+| `--force` | Refresh templates even if `.runly/` already exists |
+| `--offline` | Use bundled templates only — no GitHub fetch |
+
+**Examples:**
+
+```bash
+# Default interactive setup
+npx @runlyai/cli init
+
+# Export only to Claude and Cursor
+npx @runlyai/cli init --agent claude --agent cursor
+
+# Refresh an existing setup
+npx @runlyai/cli init --force
+
+# No internet — use bundled templates
+npx @runlyai/cli init --offline
+```
 
 ---
 
-## What students commit
+### `export` — Re-export skills to agent folders
+
+Use this after changing which agents are in your registry.
+
+```bash
+npx @runlyai/cli export
+```
+
+| Option | Description |
+|--------|-------------|
+| `--agent <name>` | Limit export to one agent: `cursor`, `claude`, `agents`, `copilot`, `gemini` |
+
+**Examples:**
+
+```bash
+# Re-export to all configured agents
+npx @runlyai/cli export
+
+# Re-export to Claude only
+npx @runlyai/cli export --agent claude
+```
+
+---
+
+### `doctor` — Health check
+
+Checks that your registry, skill files, and agent exports are all in sync.
+
+```bash
+npx @runlyai/cli doctor
+```
+
+| Option | Description |
+|--------|-------------|
+| `--fix` | Reinstall Spec Kit, sync templates from GitHub, and re-export skills |
+| `--offline` | Use bundled templates only when running with `--fix` |
+
+**Examples:**
+
+```bash
+# Check for issues
+npx @runlyai/cli doctor
+
+# Fix issues (fetches latest from GitHub)
+npx @runlyai/cli doctor --fix
+
+# Fix issues without internet
+npx @runlyai/cli doctor --fix --offline
+```
+
+---
+
+## What Gets Installed
+
+| Piece | Location | Purpose |
+|-------|----------|---------|
+| Learn workflow | `.runly/` | Registry, routers, `STATE.md`, doc templates |
+| Spec Kit | `.specify/` | Spec-driven development infrastructure |
+| Skills export | `.agents/skills/`, `.cursor/skills/`, etc. | Routers + bundled community + Spec Kit skills |
+
+Skills are **regenerated** on your machine — not committed to git.
+
+---
+
+## What to Commit
 
 ```txt
 .runly/
 .specify/
-.runly/docs/     # PROJECT_BRIEF, SPEC, PLAN, REVIEW_NOTES, TEST_PLAN, STATE.md
+.runly/docs/     ← PROJECT_BRIEF, SPEC, PLAN, REVIEW_NOTES, TEST_PLAN, STATE.md
 AGENTS.md
 ```
 
-Add to **`.gitignore`** (regenerate with `runly export`):
+Add these to **`.gitignore`** (they are regenerated by `npx @runlyai/cli export`):
 
 ```gitignore
 .cursor/
@@ -95,15 +165,15 @@ Add to **`.gitignore`** (regenerate with `runly export`):
 
 ---
 
-## For instructors & contributors
+## For Instructors & Contributors
 
 Bundled under `templates/` in this repo:
 
 ```txt
 templates/
-  runly/           # registry, runly-* routers, Learn doc templates
-  spec-kit/        # .specify/ + speckit-* skills
-  community/       # matt-pocock, gstack skills (classroom-pinned)
+  runly/        ← registry, runly-* routers, Learn doc templates
+  spec-kit/     ← .specify/ + speckit-* skills
+  community/    ← matt-pocock, gstack skills (classroom-pinned)
 ```
 
 Course content, lessons, and certification live on **RunlyAI Learn** (cloud). This CLI is the open-source **local workflow layer** students use while building real projects.
