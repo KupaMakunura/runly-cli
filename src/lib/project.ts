@@ -25,7 +25,7 @@ function migrateRegistry(raw: Record<string, unknown>): Record<string, unknown> 
 
   const workflows = raw.workflows as Record<string, Record<string, unknown>> | undefined;
   if (workflows) {
-    for (const key of ["spec", "ship", "reflect"]) {
+    for (const key of ["ship", "reflect"]) {
       delete workflows[key];
     }
 

@@ -126,9 +126,9 @@
       "purpose": "Router for spec workflow — routes to grill-with-docs and speckit-specify.",
       "ownedByRunly": true
     },
-    "runly-submit-project": {
+    "runly-submit": {
       "source": "runly",
-      "path": ".runly/skills/runly/runly-submit-project.md",
+      "path": ".runly/skills/runly/runly-submit.md",
       "purpose": "Router for submit workflow — reflection and submission package.",
       "ownedByRunly": true
     }
@@ -173,8 +173,7 @@
       "goal": "Verify the project works.",
       "preferredSkills": ["qa"],
       "fallbackSkills": [],
-      "requiredArtifact": ".runly/docs/TEST_PLAN.md",
-      "nextWorkflow": "ship"
+      "requiredArtifact": ".runly/docs/TEST_PLAN.md"
     },
     "spec": {
       "goal": "Define tools, inputs, outputs, and auth rules before planning.",

@@ -1,9 +1,11 @@
 export const WORKFLOWS = [
   "think",
+  "spec",
   "plan",
   "build",
   "review",
   "test",
+  "submit",
 ] as const;
 
 export type RunlyWorkflowId = (typeof WORKFLOWS)[number];
