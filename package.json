@@ -1,6 +1,6 @@
 {
   "name": "@runlyai/cli",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Local CLI for RunlyAI Learn — workflow scaffolding for agentic software engineering.",
   "type": "module",
   "main": "dist/main.js",
