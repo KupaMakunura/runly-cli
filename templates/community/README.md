@@ -6,12 +6,17 @@ Pinned copies of skills used by Runly workflow routers. Shipped inside the npm p
 
 ```txt
 templates/community/
-  matt-pocock/   # grill-me, grill-with-docs, zoom-out, tdd, diagnose
+  matt-pocock/   # grill-me/grilling, domain-modeling, zoom-out, tdd, diagnosing-bugs
   gstack/        # office-hours, plan-eng-review, review, qa
+  impeccable/    # UI shaping and quality workflow (including its scripts and references)
 ```
 
-On `runly init`, these export directly to the student's agent skills folder (e.g. `.cursor/skills/grill-me/`). They are **not** copied into `.runly/skills/community/`.
+On `runly init`, these export directly to the project’s agent skills folder (e.g. `.cursor/skills/grill-me/`). They are **not** copied into `.runly/skills/community/`.
 
 ## Updating (maintainers)
 
-Refresh from your local `.agents/skills/` after verifying skill content, then bump `registry.version`.
+Refresh from the official source, verify the workflow compatibility, and then bump
+`registry.version`. Community skills are copied as complete directories so skills
+with scripts or references (such as Impeccable) remain functional after export.
+
+See [UPSTREAM.md](UPSTREAM.md) for the pinned revisions in this release.

@@ -18,9 +18,14 @@ describe("exportSkills", () => {
 
       const thinkSkill = join(root, ".cursor/skills/runly-think/SKILL.md");
       const grillSkill = join(root, ".cursor/skills/grill-me/SKILL.md");
+      const impeccableScript = join(
+        root,
+        ".cursor/skills/impeccable/scripts/context.mjs",
+      );
 
       expect(await pathExists(thinkSkill)).toBe(true);
       expect(await pathExists(grillSkill)).toBe(true);
+      expect(await pathExists(impeccableScript)).toBe(true);
 
       const content = await readText(thinkSkill);
       expect(content).toContain("registry.json");

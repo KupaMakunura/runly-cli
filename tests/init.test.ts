@@ -30,6 +30,15 @@ describe("initProject", () => {
         await pathExists(join(root, ".cursor/skills/grill-me/SKILL.md")),
       ).toBe(true);
       expect(
+        await pathExists(join(root, ".cursor/skills/domain-modeling/SKILL.md")),
+      ).toBe(true);
+      expect(
+        await pathExists(join(root, ".cursor/skills/diagnosing-bugs/SKILL.md")),
+      ).toBe(true);
+      expect(
+        await pathExists(join(root, ".cursor/skills/grill-with-docs/SKILL.md")),
+      ).toBe(false);
+      expect(
         await pathExists(join(root, ".runly/skills/community")),
       ).toBe(false);
 

@@ -1,6 +1,6 @@
 # Bundled Spec Kit
 
-This folder is the **pinned Spec Kit release** shipped with `runly-cli`. Students get these files on `runly init` — no `uv` or `specify` CLI required.
+This folder is the **pinned Spec Kit release** shipped with `runly-cli`. Projects get these files on `runly init` — no `uv` or `specify` CLI required.
 
 ## Layout
 

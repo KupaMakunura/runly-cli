@@ -1,9 +1,9 @@
 ---
-name: runly-submit-project
-description: Runly submit-project router — final reflection and submission package.
+name: runly-submit
+description: Runly handoff router — prepare a project for release or team handoff.
 ---
 
-# Runly Submit Project (workflow router)
+# Runly Handoff (workflow router)
 
 You are a **lightweight router**, not the full method.
 
@@ -21,38 +21,35 @@ You are a **lightweight router**, not the full method.
 - [ ] `.runly/docs/REVIEW_NOTES.md`
 - [ ] `.runly/docs/TEST_PLAN.md`
 - [ ] `.runly/docs/CLIENT_SETUP.md`
-- [ ] `.runly/docs/REFLECTION.md`
+- [ ] `.runly/docs/REFLECTION.md` (project handoff)
 - [ ] `README.md` (in repo root)
 
 ## Route (from registry)
 
 `workflows.submit.preferredSkills`:
 
-1. **zoom-out** — invoke by name; help the learner write the final reflection by reviewing the full project from the outside.
+1. **zoom-out** — invoke by name; help the user prepare a concise project handoff by reviewing the full project from the outside.
 
-## Reflection Questions to Answer
+## Handoff Questions to Answer
 
-The learner must answer all 10 questions in `REFLECTION.md`:
+Capture the relevant answers in `REFLECTION.md`:
 
 1. What did you build?
 2. What problem does it solve?
 3. Which parts did the AI agent help with?
 4. Which parts did you have to correct manually?
-5. What did you learn about MCP tools?
-6. What did you learn about authentication?
-7. What did you learn about database design?
-8. What would you improve in version 2?
-9. How would you explain this project to another developer?
-10. What mistakes did you make during the build?
+5. What integrations, authentication, or data-design decisions matter to the next maintainer?
+6. What would you improve in the next version?
+7. How should another developer run, test, and extend the project?
 
 ## After this workflow
 
 Update STATE.md: check off **submit**, `Active skill` → `none`, `Workflow` → `complete`.
 
-Tell the learner: **You are done. Submit your GitHub repo URL, deployed server URL, and all `.runly/docs/` artifacts for certificate review.**
+Tell the user: **The project is ready for release or handoff. Share the repository, deployment URL (if applicable), and the relevant project documentation with the next owner.**
 
 ## Rules
 
-- Do not hide what the agent wrote. The reflection must explain what the learner understood and what they corrected.
-- A complete README is not optional — it is a submission requirement.
-- The reflection is how the learner proves they understood the project, not the code.
+- Do not hide what the agent wrote. The handoff must make human decisions and corrections clear.
+- A complete README is required for a useful handoff.
+- Focus on the project’s operational knowledge, not a learning assessment.

@@ -15,11 +15,11 @@ You are a **lightweight router**, not the full method.
 
 ## Step 1 — Choose planning scope
 
-If `Planning scope` in STATE.md is `unset`, ask the learner **one question** to classify the work. Update STATE.md with the chosen scope before routing.
+If `Planning scope` in STATE.md is `unset`, ask the user **one question** to classify the work. Update STATE.md with the chosen scope before routing.
 
 | Scope | Use when | Examples |
 |-------|----------|----------|
-| **mvp** | First shippable slice, greenfield, course capstone starter | "CLI with one command", "landing page + signup" |
+| **mvp** | First shippable slice or greenfield project | "CLI with one command", "landing page + signup" |
 | **feature** | One user-visible addition to an existing codebase | "Add export to CSV", "OAuth login" |
 | **epic** | Large multi-story effort needing clarification before architecture | "Billing system", "multi-tenant workspaces" |
 | **spike** | Time-boxed research; may throw code away | "Can we use library X?", "prototype streaming" |
@@ -36,7 +36,7 @@ Invoke skills **by name** in the order below. Skip a step only when this router 
 Framing matters — do not skip product thinking on greenfield work.
 
 1. **office-hours** — challenge demand, wedge, and scope before spec.
-2. **grill-with-docs** — align with `.runly/docs/PROJECT_BRIEF.md` and update CONTEXT as needed.
+2. **domain-modeling** — align with `.runly/docs/PROJECT_BRIEF.md` and update CONTEXT as needed.
 3. **speckit-specify** — produce the feature spec (Spec Kit `specs/` + align `.runly/docs/SPEC.md`).
 4. **speckit-plan** — technical implementation plan → `.runly/docs/PLAN.md`.
 
@@ -44,7 +44,7 @@ Framing matters — do not skip product thinking on greenfield work.
 
 Existing product — lighter framing, still specify before plan.
 
-1. **grill-with-docs** — pressure-test against current docs and code context.
+1. **domain-modeling** — pressure-test against current docs and code context.
 2. **speckit-specify** — spec for this feature only.
 3. **speckit-plan** — implementation plan for this feature.
 
@@ -55,7 +55,7 @@ Optional: **office-hours** if the feature changes product direction.
 Large scope — add clarification before committing to architecture.
 
 1. **office-hours** — force narrow wedge and success criteria.
-2. **grill-with-docs** — update CONTEXT / DECISIONS as scope crystallizes.
+2. **domain-modeling** — update CONTEXT / DECISIONS as scope crystallizes.
 3. **speckit-specify** — spec the first tracer bullet or phase, not the whole epic at once.
 4. **speckit-clarify** — resolve underspecified areas before planning (recommended).
 5. **speckit-plan** — plan for the **current slice** only; note follow-on phases in PLAN.md.
@@ -64,15 +64,15 @@ Large scope — add clarification before committing to architecture.
 
 Research, not production. Keep artifacts short.
 
-1. **grill-with-docs** (light) — one paragraph goal + time box in STATE.md notes.
+1. **domain-modeling** (light) — one paragraph goal + time box in STATE.md notes.
 2. **speckit-specify** — minimal spec: hypothesis, success signal, time box.
 3. **speckit-plan** — **optional**; only if the spike will produce code to keep. Otherwise document findings in STATE.md notes and stop.
 
 ### `refactor`
 
-Behavior should stay the same unless the learner explicitly expands scope.
+Behavior should stay the same unless the user explicitly expands scope.
 
-1. **grill-with-docs** — document invariants and what must not break.
+1. **domain-modeling** — document invariants and what must not break.
 2. **zoom-out** — map modules and callers before changing structure.
 3. **speckit-plan** — refactor plan → `.runly/docs/PLAN.md`.
 4. **speckit-specify** — **only if** behavior or API changes; otherwise skip.
@@ -81,7 +81,13 @@ Behavior should stay the same unless the learner explicitly expands scope.
 
 Full skill catalog: `workflows.plan.preferredSkills` in registry.json:
 
-`office-hours`, `grill-with-docs`, `speckit-specify`, `speckit-clarify`, `speckit-plan`, `zoom-out`
+`office-hours`, `domain-modeling`, `speckit-specify`, `speckit-clarify`, `speckit-plan`, `zoom-out`
+
+## UI work
+
+After the feature specification is stable, if it includes a user-facing interface,
+invoke **`impeccable shape`** before `speckit-plan`. It establishes the UX/UI
+direction without adding a design process to API, CLI, or infrastructure work.
 
 Your route is the **subset** for the chosen scope — not the full list every time.
 
@@ -96,4 +102,4 @@ Update STATE.md progress checkboxes when artifacts exist.
 
 - Do not write production code in this workflow.
 - Do not run **speckit-plan** before **speckit-specify** when specify is in the route for that scope.
-- When done, set STATE.md `Active skill` to `none`, check off **plan** if artifacts exist, tell the learner to invoke **`runly-build`**.
+- When done, set STATE.md `Active skill` to `none`, check off **plan** if artifacts exist, tell the user to invoke **`runly-build`**.

@@ -19,7 +19,7 @@
 
 ## Workflow progress
 
-Check off when the artifact exists and the learner is ready to move on.
+Check off when the artifact exists and the user is ready to move on.
 
 - [ ] **think** — `.runly/docs/PROJECT_BRIEF.md`
 - [ ] **plan** — `.runly/docs/SPEC.md` + `.runly/docs/PLAN.md` (and Spec Kit `specs/` when used)
@@ -31,4 +31,4 @@ Check off when the artifact exists and the learner is ready to move on.
 
 ## Notes
 
-<!-- Instructor, learner, or agent — scope decisions, blockers, what was skipped and why -->
+<!-- User or agent — scope decisions, blockers, what was skipped and why -->

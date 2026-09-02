@@ -31,10 +31,10 @@ Set STATE.md `Return workflow` to `build`, `Workflow` to `debug`, invoke **`runl
 
 ## After this workflow
 
-Update STATE.md: check off **build** when code runs, `Active skill` → `none`. Tell the learner to invoke **`runly-review`**.
+Update STATE.md: check off **build** when code runs, `Active skill` → `none`. Tell the user to invoke **`runly-review`**.
 
 ## Rules
 
 - Invoke in order: **tasks → implement → tdd**.
 - Planning belongs in **`runly-plan`** — do not substitute **speckit-plan** here.
-- Stay inside the plan unless the learner expands scope (then return to **`runly-plan`**).
+- Stay inside the plan unless the user expands scope (then return to **`runly-plan`**).

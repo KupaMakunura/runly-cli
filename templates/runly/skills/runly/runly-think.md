@@ -16,7 +16,7 @@ You are a **lightweight router**, not the full method.
 
 `workflows.think.preferredSkills`:
 
-1. **grill-me** — invoke by name; interview until the problem is clear.
+1. **grill-me** — invoke by name; it hands off to **grilling** and interviews one question at a time until the problem is clear.
 
 ## Artifact
 
@@ -24,9 +24,9 @@ You are a **lightweight router**, not the full method.
 
 ## After this workflow
 
-Update STATE.md: `Active skill` → `none`, check off **think** when PROJECT_BRIEF exists, set `Workflow` to `plan` when the learner is ready.
+Update STATE.md: `Active skill` → `none`, check off **think** when PROJECT_BRIEF exists, set `Workflow` to `plan` when the user is ready.
 
-Tell the learner to invoke **`runly-plan`**.
+Tell the user to invoke **`runly-plan`**.
 
 ## Rules
 

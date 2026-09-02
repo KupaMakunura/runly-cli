@@ -1,12 +1,12 @@
-# Reflection
+# Project Handoff
 
 ## What Was Built
 
 <!-- Summary of the shipped work -->
 
-## Key Learnings
+## Decisions and Trade-offs
 
-<!-- What you learned building this -->
+<!-- Important choices, constraints, and reasoning -->
 
 ## Next Improvements
 
