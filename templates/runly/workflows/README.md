@@ -1,6 +1,6 @@
 # Workflows
 
-Runly workflow skills (`runly-think`, `runly-spec`, `runly-plan`, …) are **routers**. They do not replace community skills — they read `.runly/registry.json` and route the learner through the right skills for that step.
+Runly workflow skills (`runly-think`, `runly-spec`, `runly-plan`, …) are **routers**. They do not replace community skills — they read `.runly/registry.json` and route the user through the right skills for that step.
 
 ```txt
 think → spec → plan → build → review → test → submit
@@ -10,12 +10,12 @@ think → spec → plan → build → review → test → submit
 | Router skill | Workflow | Routes to |
 |--------------|----------|-----------|
 | runly-think | think | grill-me |
-| runly-spec | spec | grill-with-docs → speckit-specify |
-| runly-plan | plan | office-hours → grill-with-docs → speckit-plan |
+| runly-spec | spec | domain-modeling → speckit-specify |
+| runly-plan | plan | office-hours → domain-modeling → speckit-plan |
 | runly-build | build | speckit-tasks → speckit-implement → tdd |
 | runly-review | review | plan-eng-review → zoom-out |
 | runly-test | test | qa |
-| runly-submit-project | submit | zoom-out (reflection) |
-| runly-debug | *(on demand)* | diagnose |
+| runly-submit | submit | zoom-out (project handoff) |
+| runly-debug | *(on demand)* | diagnosing-bugs |
 
 Skills live in `.runly/`. `runly export` copies them to your coding agent.

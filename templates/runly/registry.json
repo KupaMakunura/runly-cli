@@ -1,5 +1,5 @@
 {
-  "version": "0.4.3",
+  "version": "0.5.0",
   "export": {
     "agents": ["agents"]
   },
@@ -24,6 +24,10 @@
       "type": "bundled",
       "path": "templates/community/gstack"
     },
+    "impeccable": {
+      "type": "bundled",
+      "path": "templates/community"
+    },
     "spec-kit": {
       "type": "bundled",
       "path": "templates/spec-kit"
@@ -36,10 +40,16 @@
       "purpose": "Interview the user until the plan is clear.",
       "ownedByRunly": false
     },
-    "grill-with-docs": {
+    "grilling": {
       "source": "matt-pocock-skills",
       "path": "bundled",
-      "purpose": "Clarify the plan while updating project context documents.",
+      "purpose": "Interview the user one question at a time until the design is precise.",
+      "ownedByRunly": false
+    },
+    "domain-modeling": {
+      "source": "matt-pocock-skills",
+      "path": "bundled",
+      "purpose": "Sharpen domain language and record durable context and decisions.",
       "ownedByRunly": false
     },
     "zoom-out": {
@@ -54,10 +64,16 @@
       "purpose": "Use a red-green-refactor loop.",
       "ownedByRunly": false
     },
-    "diagnose": {
+    "diagnosing-bugs": {
       "source": "matt-pocock-skills",
       "path": "bundled",
       "purpose": "Debug using reproduce, minimize, hypothesize, instrument, fix, and regression-test.",
+      "ownedByRunly": false
+    },
+    "impeccable": {
+      "source": "impeccable",
+      "path": "bundled",
+      "purpose": "Shape and validate user-facing interfaces when UI is in scope.",
       "ownedByRunly": false
     },
     "office-hours": {
@@ -93,7 +109,7 @@
     "runly-plan": {
       "source": "runly",
       "path": ".runly/skills/runly/runly-plan.md",
-      "purpose": "Router for plan workflow — scope-aware routing to office-hours, grill-with-docs, speckit-specify, speckit-clarify, speckit-plan.",
+      "purpose": "Router for plan workflow — scope-aware routing to office-hours, domain-modeling, Spec Kit, and Impeccable for UI work.",
       "ownedByRunly": true
     },
     "runly-build": {
@@ -117,19 +133,19 @@
     "runly-debug": {
       "source": "runly",
       "path": ".runly/skills/runly/runly-debug.md",
-      "purpose": "Router for debug — routes to diagnose when something breaks.",
+      "purpose": "Router for debug — routes to diagnosing-bugs when something breaks.",
       "ownedByRunly": true
     },
     "runly-spec": {
       "source": "runly",
       "path": ".runly/skills/runly/runly-spec.md",
-      "purpose": "Router for spec workflow — routes to grill-with-docs and speckit-specify.",
+      "purpose": "Router for spec workflow — routes to domain-modeling and speckit-specify.",
       "ownedByRunly": true
     },
     "runly-submit": {
       "source": "runly",
       "path": ".runly/skills/runly/runly-submit.md",
-      "purpose": "Router for submit workflow — reflection and submission package.",
+      "purpose": "Router for submit workflow — prepare a project for release or handoff.",
       "ownedByRunly": true
     }
   },
@@ -145,7 +161,7 @@
       "goal": "Turn intent into a spec and technical plan. Route by planning scope (mvp, feature, epic, spike, refactor) — see runly-plan router.",
       "preferredSkills": [
         "office-hours",
-        "grill-with-docs",
+        "domain-modeling",
         "zoom-out",
         "speckit-specify",
         "speckit-clarify",
@@ -177,13 +193,13 @@
     },
     "spec": {
       "goal": "Define tools, inputs, outputs, and auth rules before planning.",
-      "preferredSkills": ["grill-with-docs", "speckit-specify"],
+      "preferredSkills": ["domain-modeling", "speckit-specify"],
       "fallbackSkills": [],
       "requiredArtifact": ".runly/docs/SPEC.md",
       "nextWorkflow": "plan"
     },
     "submit": {
-      "goal": "Write the final reflection and prepare the submission package.",
+      "goal": "Prepare the project documentation for release or handoff.",
       "preferredSkills": ["zoom-out"],
       "fallbackSkills": [],
       "requiredArtifact": ".runly/docs/REFLECTION.md"

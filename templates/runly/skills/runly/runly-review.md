@@ -27,7 +27,7 @@ If a preferred skill is missing, use `workflows.review.fallbackSkills` (e.g. **r
 
 ## After this workflow
 
-Update STATE.md: check off **review**, `Active skill` → `none`. Tell the learner to invoke **`runly-test`**.
+Update STATE.md: check off **review**, `Active skill` → `none`. Tell the user to invoke **`runly-test`**.
 
 ## Rules
 
